@@ -5,7 +5,7 @@ function Home() {
   // Slideshow state
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
-    { id: 1, bg: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' },
+    { id: 1, bg: 'code.png' },
     { id: 2, bg: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' },
     { id: 3, bg: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' },
     { id: 4, bg: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' }
