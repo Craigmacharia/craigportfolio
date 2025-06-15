@@ -1,3 +1,6 @@
+/* Add this to your index.css */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 /* Glass Morphism Effects */
 .glass-card {
   background: rgba(255, 255, 255, 0.1) !important;
@@ -95,4 +98,38 @@ body {
   .section {
     padding: 3rem 0;
   }
+}
+
+.gallery-img {
+  transition: transform 0.3s ease;
+  height: 200px; /* Adjust height as needed */
+  width: 100%;
+  object-fit: cover;
+}
+
+.gallery-img:hover {
+  transform: scale(1.05);
+}
+
+
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  /* rest of your body styles */
+}
+
+/* Gallery specific styles */
+.gallery-img {
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gallery-img:hover {
+  transform: scale(1.05);
+}
+
+.object-fit-cover {
+  object-fit: cover;
+  height: 200px; /* Adjust as needed */
 }
