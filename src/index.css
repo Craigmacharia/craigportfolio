@@ -133,3 +133,45 @@ body {
   object-fit: cover;
   height: 200px; /* Adjust as needed */
 }
+
+/* Gallery Styles */
+.gallery-item {
+  transition: all 0.3s ease;
+}
+
+.portrait-image {
+  max-height: 300px; /* Adjust based on your needs */
+  width: auto;
+  margin: 0 auto;
+  display: block;
+  background: rgba(0,0,0,0.1); /* Adds subtle background for transparent PNGs */
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.gallery-item:hover .gallery-caption {
+  transform: translateY(0);
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* For touch devices */
+@media (hover: none) {
+  .gallery-caption {
+    transform: translateY(0);
+  }
+}

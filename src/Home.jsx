@@ -6,9 +6,9 @@ function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = [
     { id: 1, bg: 'code.png' },
-    { id: 2, bg: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' },
+    { id: 2, bg: 'ladha.png' },
     { id: 3, bg: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' },
-    { id: 4, bg: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80' }
+    { id: 4, bg: 'office.png' }
   ];
 
   // Gallery images
@@ -200,47 +200,63 @@ function Home() {
       <i className="bi bi-images me-2 icon-dark"></i>Project Gallery
     </h2>
     <div className="row g-4">
-      {/* Image 1 - Replace with your own */}
+      {/* Image 1 */}
       <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100">
+        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
           <img 
-            src="/code.png"  // Path to your image in public/images folder
-            alt="My Project Screenshot 1" 
-            className="img-fluid w-100 h-100 object-fit-cover gallery-img"
+            src="/code.png"
+            alt="Code Project" 
+            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
           />
+          <div className="gallery-caption">
+            <h5 className="fw-bold">Code Project</h5>
+            <p className="small">React & Django implementation</p>
+          </div>
         </div>
       </div>
       
-      {/* Image 2 - Replace with your own */}
+      {/* Image 2 */}
       <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100">
+        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
           <img 
-            src="/murima.png"  // Path to your image in public/images folder
-            alt="My Project Screenshot 2" 
-            className="img-fluid w-100 h-100 object-fit-cover gallery-img"
+            src="/murima.png"
+            alt="Murima Project" 
+            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
           />
+          <div className="gallery-caption">
+            <h5 className="fw-bold">Murima Project</h5>
+            <p className="small">School management system</p>
+          </div>
         </div>
       </div>
       
-      {/* Image 3 - Replace with your own */}
+      {/* Image 3 */}
       <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100">
+        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
           <img 
-            src="/land.png"  // Path to your image in public/images folder
-            alt="My Project Screenshot 3" 
-            className="img-fluid w-100 h-100 object-fit-cover gallery-img"
+            src="/land.png"
+            alt="Landing Page" 
+            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
           />
+          <div className="gallery-caption">
+            <h5 className="fw-bold">Landing Page</h5>
+            <p className="small">Marketing template collection</p>
+          </div>
         </div>
       </div>
       
-      {/* Image 4 - Replace with your own */}
+      {/* Image 4 */}
       <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100">
+        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
           <img 
-            src="/admin.png"  // Path to your image in public/images folder
-            alt="My Project Screenshot 4" 
-            className="img-fluid w-100 h-100 object-fit-cover gallery-img"
+            src="/admin.png"
+            alt="Admin Dashboard" 
+            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
           />
+          <div className="gallery-caption">
+            <h5 className="fw-bold">Admin Dashboard</h5>
+            <p className="small">Management interface</p>
+          </div>
         </div>
       </div>
     </div>
