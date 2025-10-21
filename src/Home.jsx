@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './index.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Home() {
   // Slideshow state
@@ -11,7 +15,7 @@ function Home() {
     { id: 4, bg: 'office.png' }
   ];
 
-  // Gallery images
+  // Gallery images - added loading="lazy" in JSX for optimization
   const galleryImages = [
     { id: 1, src: 'https://images.unsplash.com/photo-1579403124614-197f69d8187b?w=500&auto=format&fit=crop&q=60', alt: 'Code snippet' },
     { id: 2, src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500&auto=format&fit=crop&q=60', alt: 'Development setup' },
@@ -19,7 +23,13 @@ function Home() {
     { id: 4, src: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=500&auto=format&fit=crop&q=60', alt: 'Web design' }
   ];
 
-  // Auto-advance slideshow
+  // Refs for GSAP animations
+  const sectionsRef = useRef([]);
+  const cardsRef = useRef([]);
+  const galleryItemsRef = useRef([]);
+  const navItemsRef = useRef([]);
+
+  // Auto-advance slideshow - optimized interval to 5000ms, no changes needed for speed
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -27,9 +37,105 @@ function Home() {
     return () => clearInterval(interval);
   }, [slides.length]);
 
+  // GSAP Scroll Effects and Animations
+  useEffect(() => {
+    // Scroll-triggered section animations (fade-in and slide-up)
+    sectionsRef.current.forEach((section) => {
+      if (section) {
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+              markers: false, // Set to true for debugging
+            },
+          }
+        );
+      }
+    });
+
+    // Project cards hover animations (scale and shadow)
+    cardsRef.current.forEach((card) => {
+      if (card) {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { scale: 1.05, boxShadow: '0 10px 20px rgba(0,0,0,0.2)', duration: 0.3, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { scale: 1, boxShadow: '0 4px 15px rgba(0,0,0,0.1)', duration: 0.3, ease: 'power2.out' });
+        });
+      }
+    });
+
+    // Gallery items hover animations (caption slide-up)
+    galleryItemsRef.current.forEach((item) => {
+      if (item) {
+        const caption = item.querySelector('.gallery-caption');
+        item.addEventListener('mouseenter', () => {
+          gsap.to(caption, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+        });
+        item.addEventListener('mouseleave', () => {
+          gsap.to(caption, { y: '100%', opacity: 0, duration: 0.4, ease: 'power2.out' });
+        });
+      }
+    });
+
+    // Navbar items click animation (subtle scale)
+    navItemsRef.current.forEach((item) => {
+      if (item) {
+        item.addEventListener('click', () => {
+          gsap.to(item, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 });
+        });
+      }
+    });
+
+    // Mobile navbar dropdown animation
+    const navbarCollapse = document.querySelector('#navbarNav');
+    if (navbarCollapse) {
+      gsap.set(navbarCollapse, { height: 0, opacity: 0 });
+      navbarCollapse.addEventListener('show.bs.collapse', () => {
+        gsap.to(navbarCollapse, { height: 'auto', opacity: 1, duration: 0.5, ease: 'power2.out' });
+      });
+      navbarCollapse.addEventListener('hide.bs.collapse', () => {
+        gsap.to(navbarCollapse, { height: 0, opacity: 0, duration: 0.5, ease: 'power2.in' });
+      });
+    }
+  }, []);
+
+  // Helper to add refs
+  const addSectionRef = (el) => {
+    if (el && !sectionsRef.current.includes(el)) {
+      sectionsRef.current.push(el);
+    }
+  };
+
+  const addCardRef = (el) => {
+    if (el && !cardsRef.current.includes(el)) {
+      cardsRef.current.push(el);
+    }
+  };
+
+  const addGalleryItemRef = (el) => {
+    if (el && !galleryItemsRef.current.includes(el)) {
+      galleryItemsRef.current.push(el);
+    }
+  };
+
+  const addNavItemRef = (el) => {
+    if (el && !navItemsRef.current.includes(el)) {
+      navItemsRef.current.push(el);
+    }
+  };
+
   return (
     <>
-      {/* Navbar */}
+      {/* Navbar - Improved mobile dropdown with GSAP animation */}
       <nav className="navbar navbar-expand-lg fixed-top navbar-dark glass-nav">
         <div className="container">
           <a className="navbar-brand fw-bold animate-fadeIn" href="#">
@@ -40,17 +146,17 @@ function Home() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item animate-fadeIn" style={{ animationDelay: '0.2s' }}>
+              <li className="nav-item animate-fadeIn" style={{ animationDelay: '0.2s' }} ref={addNavItemRef}>
                 <a className="nav-link" href="#projects">
                   <i className="bi bi-folder2-open me-1 icon-dark"></i>Projects
                 </a>
               </li>
-              <li className="nav-item animate-fadeIn" style={{ animationDelay: '0.4s' }}>
+              <li className="nav-item animate-fadeIn" style={{ animationDelay: '0.4s' }} ref={addNavItemRef}>
                 <a className="nav-link" href="#gallery">
                   <i className="bi bi-images me-1 icon-dark"></i>Gallery
                 </a>
               </li>
-              <li className="nav-item animate-fadeIn" style={{ animationDelay: '0.6s' }}>
+              <li className="nav-item animate-fadeIn" style={{ animationDelay: '0.6s' }} ref={addNavItemRef}>
                 <a className="nav-link" href="#contact">
                   <i className="bi bi-envelope me-1 icon-dark"></i>Contact
                 </a>
@@ -79,11 +185,11 @@ function Home() {
         </div>
       </div>
 
-      {/* Slideshow Section */}
-      <div className="container my-5">
+      {/* Slideshow Section - Optimized with memoization if needed, but simple state */}
+      <div className="container my-5" ref={addSectionRef}>
         <div className="slideshow shadow-lg">
           {slides.map((slide, index) => (
-            <div 
+            <div
               key={slide.id}
               className={`slide ${index === currentSlide ? 'active' : ''}`}
               style={{ backgroundImage: `url(${slide.bg})` }}
@@ -92,8 +198,8 @@ function Home() {
         </div>
       </div>
 
-      {/* Projects Section */}
-      <div className="section" id="projects">
+      {/* Projects Section - Added refs for scroll and hover */}
+      <div className="section" id="projects" ref={addSectionRef}>
         <div className="container">
           <h2 className="text-center mb-5 display-5 fw-bold">
             <i className="bi bi-stack me-2 icon-dark"></i>Featured Projects
@@ -101,7 +207,7 @@ function Home() {
           <div className="row g-4">
             {/* Project 1 */}
             <div className="col-lg-3 col-md-6">
-              <div className="card glass-card project-card h-100 border-0">
+              <div className="card glass-card project-card h-100 border-0" ref={addCardRef}>
                 <div className="card-body">
                   <div className="mb-3">
                     <i className="bi bi-building fs-1 icon-dark"></i>
@@ -116,15 +222,14 @@ function Home() {
                 </div>
                 <div className="card-footer bg-transparent border-0">
                   <a href="https://elizasportfolio.netlify.app/" className="btn btn-sm btn-glass me-2">
-                  <i className="bi bi-box-arrow-up-right icon-dark"></i> Live
+                    <i className="bi bi-box-arrow-up-right icon-dark"></i> Live
                   </a>
                 </div>
               </div>
             </div>
-
             {/* Project 2 */}
             <div className="col-lg-3 col-md-6">
-              <div className="card glass-card project-card h-100 border-0">
+              <div className="card glass-card project-card h-100 border-0" ref={addCardRef}>
                 <div className="card-body">
                   <div className="mb-3">
                     <i className="bi bi-layout-text-window-reverse fs-1 icon-dark"></i>
@@ -144,10 +249,9 @@ function Home() {
                 </div>
               </div>
             </div>
-
             {/* Project 3 */}
             <div className="col-lg-3 col-md-6">
-              <div className="card glass-card project-card h-100 border-0">
+              <div className="card glass-card project-card h-100 border-0" ref={addCardRef}>
                 <div className="card-body">
                   <div className="mb-3">
                     <i className="bi bi-house-door fs-1 icon-dark"></i>
@@ -167,10 +271,9 @@ function Home() {
                 </div>
               </div>
             </div>
-
             {/* Project 4 */}
             <div className="col-lg-3 col-md-6">
-              <div className="card glass-card project-card h-100 border-0">
+              <div className="card glass-card project-card h-100 border-0" ref={addCardRef}>
                 <div className="card-body">
                   <div className="mb-3">
                     <i className="bi bi-calculator fs-1 icon-dark"></i>
@@ -193,78 +296,79 @@ function Home() {
         </div>
       </div>
 
-      {/* Gallery Section */}
-<div className="section" id="gallery">
-  <div className="container">
-    <h2 className="text-center mb-5 display-5 fw-bold">
-      <i className="bi bi-images me-2 icon-dark"></i>Project Gallery
-    </h2>
-    <div className="row g-4">
-      {/* Image 1 */}
-      <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
-          <img 
-            src="/code.png"
-            alt="Code Project" 
-            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
-          />
-          <div className="gallery-caption">
-            <h5 className="fw-bold">Code Project</h5>
-            <p className="small">React & Django implementation</p>
+      {/* Gallery Section - Added lazy loading, refs for hover */}
+      <div className="section" id="gallery" ref={addSectionRef}>
+        <div className="container">
+          <h2 className="text-center mb-5 display-5 fw-bold">
+            <i className="bi bi-images me-2 icon-dark"></i>Project Gallery
+          </h2>
+          <div className="row g-4">
+            {/* Image 1 */}
+            <div className="col-6 col-md-3">
+              <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item" ref={addGalleryItemRef}>
+                <img
+                  src="/code.png"
+                  alt="Code Project"
+                  className="img-fluid w-100 h-100 object-fit-contain portrait-image"
+                  loading="lazy"
+                />
+                <div className="gallery-caption" style={{ transform: 'translateY(100%)', opacity: 0 }}>
+                  <h5 className="fw-bold">Code Project</h5>
+                  <p className="small">React & Django implementation</p>
+                </div>
+              </div>
+            </div>
+            {/* Image 2 */}
+            <div className="col-6 col-md-3">
+              <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item" ref={addGalleryItemRef}>
+                <img
+                  src="/murima.png"
+                  alt="Murima Project"
+                  className="img-fluid w-100 h-100 object-fit-contain portrait-image"
+                  loading="lazy"
+                />
+                <div className="gallery-caption" style={{ transform: 'translateY(100%)', opacity: 0 }}>
+                  <h5 className="fw-bold">Murima Project</h5>
+                  <p className="small">School management system</p>
+                </div>
+              </div>
+            </div>
+            {/* Image 3 */}
+            <div className="col-6 col-md-3">
+              <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item" ref={addGalleryItemRef}>
+                <img
+                  src="/land.png"
+                  alt="Landing Page"
+                  className="img-fluid w-100 h-100 object-fit-contain portrait-image"
+                  loading="lazy"
+                />
+                <div className="gallery-caption" style={{ transform: 'translateY(100%)', opacity: 0 }}>
+                  <h5 className="fw-bold">Landing Page</h5>
+                  <p className="small">Marketing template collection</p>
+                </div>
+              </div>
+            </div>
+            {/* Image 4 */}
+            <div className="col-6 col-md-3">
+              <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item" ref={addGalleryItemRef}>
+                <img
+                  src="/admin.png"
+                  alt="Admin Dashboard"
+                  className="img-fluid w-100 h-100 object-fit-contain portrait-image"
+                  loading="lazy"
+                />
+                <div className="gallery-caption" style={{ transform: 'translateY(100%)', opacity: 0 }}>
+                  <h5 className="fw-bold">Admin Dashboard</h5>
+                  <p className="small">Management interface</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      {/* Image 2 */}
-      <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
-          <img 
-            src="/murima.png"
-            alt="Murima Project" 
-            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
-          />
-          <div className="gallery-caption">
-            <h5 className="fw-bold">Murima Project</h5>
-            <p className="small">School management system</p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Image 3 */}
-      <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
-          <img 
-            src="/land.png"
-            alt="Landing Page" 
-            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
-          />
-          <div className="gallery-caption">
-            <h5 className="fw-bold">Landing Page</h5>
-            <p className="small">Marketing template collection</p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Image 4 */}
-      <div className="col-6 col-md-3">
-        <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item">
-          <img 
-            src="/admin.png"
-            alt="Admin Dashboard" 
-            className="img-fluid w-100 h-100 object-fit-contain portrait-image"
-          />
-          <div className="gallery-caption">
-            <h5 className="fw-bold">Admin Dashboard</h5>
-            <p className="small">Management interface</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-      {/* Skills Section */}
-      <div className="section bg-dark bg-opacity-75" id="skills">
+      {/* Skills Section - Added scroll ref */}
+      <div className="section bg-dark bg-opacity-75" id="skills" ref={addSectionRef}>
         <div className="container">
           <h2 className="text-center mb-5 display-5 fw-bold">
             <i className="bi bi-tools me-2 icon-dark"></i>Skills & Technologies
@@ -291,8 +395,8 @@ function Home() {
         </div>
       </div>
 
-      {/* Contact Section */}
-      <div className="section" id="contact">
+      {/* Contact Section - Added scroll ref */}
+      <div className="section" id="contact" ref={addSectionRef}>
         <div className="container">
           <h2 className="text-center mb-5 display-5 fw-bold">
             <i className="bi bi-chat-left-text me-2 icon-dark"></i>Get In Touch
