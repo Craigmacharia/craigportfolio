@@ -212,8 +212,8 @@ function Home() {
                   <div className="mb-3">
                     <i className="bi bi-building fs-1 icon-dark"></i>
                   </div>
-                  <h5 className="card-title">APPEALING PORTFOLIO</h5>
-                  <p className="card-text">Full-stack hotel management system with Django backend and React frontend.</p>
+                  <h5 className="card-title">AUDITING FIRM'S WEBSITE</h5>
+                  <p className="card-text">Fully functional static website for an auditing firm in Nairobi.</p>
                   <div className="mt-3">
                     <span className="badge badge-glass me-1">HTML</span>
                     <span className="badge badge-glass me-1">REACT</span>
@@ -221,7 +221,7 @@ function Home() {
                   </div>
                 </div>
                 <div className="card-footer bg-transparent border-0">
-                  <a href="https://elizasportfolio.netlify.app/" className="btn btn-sm btn-glass me-2">
+                  <a href="https://jpallianceandassociates.com/" className="btn btn-sm btn-glass me-2">
                     <i className="bi bi-box-arrow-up-right icon-dark"></i> Live
                   </a>
                 </div>
@@ -234,16 +234,16 @@ function Home() {
                   <div className="mb-3">
                     <i className="bi bi-layout-text-window-reverse fs-1 icon-dark"></i>
                   </div>
-                  <h5 className="card-title">Landing Page Board</h5>
-                  <p className="card-text">Collection of responsive landing page templates for various business needs.</p>
+                  <h5 className="card-title">A BLOG WEBSITE FOR NGEMI</h5>
+                  <p className="card-text">A responsive blog-website, with a well linked admin page for CRUD operations and google adsense integration.</p>
                   <div className="mt-3">
                     <span className="badge badge-glass me-1">HTML</span>
-                    <span className="badge badge-glass me-1">CSS</span>
+                    <span className="badge badge-glass me-1">React</span>
                     <span className="badge badge-glass">JavaScript</span>
                   </div>
                 </div>
                 <div className="card-footer bg-transparent border-0">
-                  <a href="https://landingpageboard.netlify.app/" target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-glass">
+                  <a href="https://ngemi.blog/" target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-glass">
                     <i className="bi bi-box-arrow-up-right icon-dark"></i> Live
                   </a>
                 </div>
@@ -256,16 +256,16 @@ function Home() {
                   <div className="mb-3">
                     <i className="bi bi-house-door fs-1 icon-dark"></i>
                   </div>
-                  <h5 className="card-title">Ladha House</h5>
-                  <p className="card-text">Real estate listing website with property search and filtering capabilities.</p>
+                  <h5 className="card-title">SCHOOL WEBSITE </h5>
+                  <p className="card-text">A comprehensive website for Snowview Complex a private school in Nyeri. "UNDER DEVELOPMENT"</p>
                   <div className="mt-3">
                     <span className="badge badge-glass me-1">React</span>
-                    <span className="badge badge-glass me-1">Firebase</span>
+                    <span className="badge badge-glass me-1">Netlify.CMS</span>
                     <span className="badge badge-glass">API</span>
                   </div>
                 </div>
                 <div className="card-footer bg-transparent border-0">
-                  <a href="https://ladhahouse.netlify.app/" target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-glass">
+                  <a href="https://schoolsiteme.netlify.app/" target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-glass">
                     <i className="bi bi-box-arrow-up-right icon-dark"></i> Live
                   </a>
                 </div>
@@ -322,14 +322,14 @@ function Home() {
             <div className="col-6 col-md-3">
               <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item" ref={addGalleryItemRef}>
                 <img
-                  src="/murima.png"
+                  src="/sy.jpeg"
                   alt="Murima Project"
                   className="img-fluid w-100 h-100 object-fit-contain portrait-image"
                   loading="lazy"
                 />
                 <div className="gallery-caption" style={{ transform: 'translateY(100%)', opacity: 0 }}>
-                  <h5 className="fw-bold">Murima Project</h5>
-                  <p className="small">School management system</p>
+                  <h5 className="fw-bold">JP Alliance</h5>
+                  <p className="small">A comprehensive website for a major audit firm.</p>
                 </div>
               </div>
             </div>
@@ -352,14 +352,14 @@ function Home() {
             <div className="col-6 col-md-3">
               <div className="glass-card rounded-3 overflow-hidden h-100 position-relative gallery-item" ref={addGalleryItemRef}>
                 <img
-                  src="/admin.png"
+                  src="/sm.jpeg"
                   alt="Admin Dashboard"
                   className="img-fluid w-100 h-100 object-fit-contain portrait-image"
                   loading="lazy"
                 />
                 <div className="gallery-caption" style={{ transform: 'translateY(100%)', opacity: 0 }}>
-                  <h5 className="fw-bold">Admin Dashboard</h5>
-                  <p className="small">Management interface</p>
+                  <h5 className="fw-bold">Ngemi blog website</h5>
+                  <p className="small">Fully backend integrated blog website with google adsense and SEO optimization</p>
                 </div>
               </div>
             </div>
